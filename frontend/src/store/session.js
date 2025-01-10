@@ -27,12 +27,12 @@ export const login = (user) => async (dispatch) => {
     }),
   });
 
-  if (response.ok){
-    const data = await response.json();
+  const data = await response.json();
+
+  if (response.ok){   
     dispatch(setUser(data.user));
-  } else {
-    const errors = await response.json();
-  }  
+  }
+   
   return response;
 };
 
