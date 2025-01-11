@@ -298,7 +298,7 @@ router.get('/', validateQueryParams, async (req, res, next) => {
     query.limit = size;
     query.offset = size * (page - 1);
 
-    console.log(page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice , query.offset);
+    // console.log(page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice , query.offset);
 
     const spots = await Spot.findAll( {
         query,
@@ -472,7 +472,7 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const spotId = parseInt(req.params.spotId);
     const { address, city, state, country, lat, lng, name, description, price} = req.body;
 
-    console.log(address, city, state, country, lat, lng, name, description, price)
+    // console.log(address, city, state, country, lat, lng, name, description, price)
     
     const spot = await Spot.findByPk( spotId );
     if(spot){
