@@ -1,1 +1,6 @@
 /* TODO: Add sitewide styles */
+@import url("./reset.css");
+
+#root{
+    padding: 10px;
+}
