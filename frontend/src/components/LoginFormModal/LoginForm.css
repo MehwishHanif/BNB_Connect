@@ -1,0 +1,39 @@
+
+.errors{
+    color: red;
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;*/
+    gap: 16px; 
+    padding: 0 20px;  
+}
+
+.login-header{
+    font-size:large;
+    color:brown;
+}
+
+.login-modal{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-top: 14px;
+    padding-bottom: 30px;
+}
+
+.login-modal input{
+    border: 1px black solid;
+    height: 1.5em;
+    border-radius: 3px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.login-button{
+    align-self: center;
+    display: block;
+}
