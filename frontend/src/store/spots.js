@@ -15,13 +15,39 @@ export const loadSpots = (spots) => ({
 export const getAllSpots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots');
     const data = await response.json();
-    if (response.ok) { 
-        console.log(data.Spots);     
+    if (response.ok) {    
         dispatch(loadSpots(data.Spots));      
     }
     return response;
 }
 
+// export const createSpot = (spot, spotImages) => async (dispatch) => {
+//   const response = await csrfFetch('/api/spots',{
+//     method: 'POST',
+//     headers: {'Content-Type': 'application/json'},
+//     body: JSON.stringify(spot)
+//   });
+
+//   const data = await response.json();
+//   if (response.ok) {    
+//       dispatch(loadSpots(data.Spots));      
+//   }
+//   return response;
+// }
+
+// export const addImagesToSpot = (spotImages) => async (dispatch) => {
+//   const response = await csrfFetch('/api/spots',{
+//     method: 'POST',
+//     headers: {'Content-Type': 'application/json'},
+//     body: JSON.stringify(spotImages)
+//   });
+
+//   const data = await response.json();
+//   if (response.ok) {    
+//       dispatch(loadSpots(data.Spots));      
+//   }
+//   return response;
+// }
 /*-------------------------- Selectors --------------------------- */
 
 const selectSpots = (state) => state.spots;

@@ -8,13 +8,16 @@ function Navigation({ isLoaded }) {
 
   return (
     <ul className='nav-wrapper'>
-      <li>
-        <NavLink to="/">Home</NavLink>
+      <li className='nav-title'>
+        <NavLink to="/">BnB-Connect</NavLink>
       </li>
       {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
+        <ul className='nav-actions'>
+          {sessionUser? (<NavLink to="/spots/new">Create a New Spot</NavLink>):(<></>)}
+          <li className='nav-profile-btn'>
+            <ProfileButton user={sessionUser} />
+          </li>
+        </ul>
       )}
     </ul>
   );
