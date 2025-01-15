@@ -71,7 +71,16 @@ const spotsReducer = (state = {}, action) => {
       case LOAD_SPOTS: {
         const spotsState = {};
         action.spots.forEach((spot) => {
-            spotsState[spot.id] = spot;
+          const updatedSpot = { ...spot };
+          if (typeof updatedSpot.price === "number") {
+            updatedSpot.price = updatedSpot.price.toFixed(2);
+          }
+          if (updatedSpot.avgRating === null) {
+            updatedSpot.avgRating = 0.0;
+          } else if (typeof updatedSpot.avgRating === "number") {
+            updatedSpot.avgRating = updatedSpot.avgRating.toFixed(1);
+          }
+          spotsState[spot.id] = updatedSpot;
         });
         return spotsState;
       }

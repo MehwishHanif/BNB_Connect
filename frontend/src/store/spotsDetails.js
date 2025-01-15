@@ -43,6 +43,10 @@ const spotsDetailsReducer = (state = {}, action) => {
           ...spot,
           SpotImages: [...spot.SpotImages], // Overwrite or set the SpotImages
           Owner: { ...spot.Owner }, // Overwrite or set the Owner
+          avgStarRating: spot.avgStarRating === null 
+          ? 0.0 
+          : spot.avgStarRating.toFixed(1), // Convert to string with 1 decimal place
+          price: spot.price.toFixed(2),
         },
       };
     }
