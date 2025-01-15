@@ -8,7 +8,7 @@ function SpotIndexItem({ spot }){
     ) : (
     <>
         <FaStar /> 
-        <span> {spot?.avgRating?.toFixed(1)}</span> 
+        <span> {spot?.avgRating}</span> 
     </>
     );
     return (

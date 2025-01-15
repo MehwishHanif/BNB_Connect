@@ -28,7 +28,7 @@ function SpotShow(){
       ) : (
       <p>
           <FaStar /> 
-          <span> {spot?.avgStarRating?.toFixed(1)}</span> 
+          <span> {spot?.avgStarRating}</span> 
           <span > &middot; </span> 
           <span> {spot?.numReviews > 1 ? `# ${spot?.numReviews} reviews` : `# ${spot?.numReviews} review`}</span>
       </p>
@@ -58,7 +58,7 @@ function SpotShow(){
           </div>
           <div className="spot-reserve-section">
             <div className="spot-info">
-              <p>{`$${spot?.price?.toFixed(2)}`}</p>
+              <p>{`$${spot?.price}`}</p>
               <p> </p>
               <p>
               {ratingContent}
