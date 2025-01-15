@@ -15,6 +15,7 @@ function SpotForm( {spot, spotImage,formType}){
     const [description, setDescription] = useState(spot?.description);
     const [price, setPrice] = useState(spot?.price);
     const [errors, setErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
     const [previewImage, setPreviewImage] = useState(spotImage?.previewImage);
     const [image1, setimage1] = useState(spotImage?.image1);
@@ -22,22 +23,68 @@ function SpotForm( {spot, spotImage,formType}){
     const [image3, setimage3] = useState(spotImage?.image3);
     const [image4, setimage4] = useState(spotImage?.image4);
 
-    useEffect(() => {
-         setErrors({});
-    }, []);
+    // useEffect(() => {
+    //      setErrors({});
+    // }, []);
    
+    useEffect(() =>{
+      const formErrors = {};
+      if(!address.length){
+        formErrors.address = "Address is required";
+      }
+      if(!city.length){
+        formErrors.city = "City is required";
+      }
+      if(!state.length){
+        formErrors.state = "State is required";
+      }
+      if(!country.length){
+        formErrors.country = "Country is required";
+      }
+      if(!name.length){
+        formErrors.name = "Name is required";
+      }
+      if(!description.length){
+        formErrors.description = "Description is required";
+      }
+      if(!price.length){
+        formErrors.price = "Price is required";
+      }
+      if(!previewImage.length){
+        formErrors.previewImage = "Preview image is required";
+      }      
+      if(description.length && description.length < 30){
+        formErrors.description = "Description needs 30 or more characters";
+      }
+      if(previewImage.length && !isValidURL(previewImage)){
+        formErrors.previewImage = "Image URL must be a valid URL";
+      }
+      if(image1.length && !isValidURL(image1)){
+        formErrors.image1 = "Image URL must be a valid URL";
+      }
+      if(image2.length && !isValidURL(image2)){
+        formErrors.image2 = "Image URL must be a valid URL";
+      }
+      if(image3.length && !isValidURL(image3)){
+        formErrors.image3 = "Image URL must be a valid URL";
+      }
+      if(image4.length && !isValidURL(image4)){
+        formErrors.image4 = "Image URL must be a valid URL";
+      }          
+      setErrors(formErrors);
+    },[address, city, state, country,name,description,price, previewImage, image1, image2, image3, image4]);
+
     function prefillDummyData(e) {
         e.preventDefault();
-        setAddress('');
-        setCity('');
-        setState('');
-        setCountry('');
-        setName('');
-        setDescription('');
-        setPrice('');
-        //setPreviewImage();
+        setAddress('123 Gaslamp street');
+        setCity('San Diego');
+        setState('California');
+        setCountry('United States of America');
+        setName('The Nook');
+        setDescription('Welcome to The Nook, a cozy and charming retreat designed for relaxation and simplicity.');
+        setPrice('345');
+        setPreviewImage('https://images.unsplash.com/photo-1508330570239-ce7cabceee22?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGhvdXNlfGVufDB8fDB8fHww');
 
-        // console.log("Prefill dummy data triggered!");
     }
     const reset = () => {
       setAddress('');
@@ -64,73 +111,12 @@ function SpotForm( {spot, spotImage,formType}){
         "i"
       );
       return urlPattern.test(string);
-    }
-      // { address,  city,  state,  country, name, description,  price , previewImage, image1, image2, image3, image4 };
+    }      
 
-    const handleSubmit = async (e) => {
+    const handleSubmit =  (e) => {
       e.preventDefault();
-      const formErrors = {};
-      let isFormValid = true;
-
-      if(!address.length){
-        isFormValid=false;
-        formErrors.address = "Address is required";
-      }
-      if(!city.length){
-        isFormValid=false;
-        formErrors.city = "City is required";
-      }
-      if(!state.length){
-        isFormValid=false;
-        formErrors.state = "State is required";
-      }
-      if(!country.length){
-        formErrors.country = "Country is required";
-        isFormValid=false;
-      }
-      if(!name.length){
-        formErrors.name = "Name is required";
-        isFormValid=false;
-      }
-      if(!description.length){
-        formErrors.description = "Description is required";
-        isFormValid=false;
-      }
-      if(!price.length){
-        formErrors.price = "Price is required";
-        isFormValid=false;
-      }
-      if(!previewImage.length){
-        formErrors.previewImage = "Preview image is required";
-        isFormValid=false;
-      }
-      if(description.length && description.length < 30){
-        formErrors.description = "Description needs 30 or more characters";
-        isFormValid=false;
-      }
-      if(previewImage.length && !isValidURL(previewImage)){
-        formErrors.previewImage = "Image URL must be a valid URL";
-        isFormValid=false;
-      }
-      if(image1.length && !isValidURL(image1)){
-        formErrors.image1 = "Image URL must be a valid URL";
-        isFormValid=false;
-      }
-      if(image2.length && !isValidURL(image2)){
-        formErrors.image2 = "Image URL must be a valid URL";
-        isFormValid=false;
-      }
-      if(image3.length && !isValidURL(image3)){
-        formErrors.image3 = "Image URL must be a valid URL";
-        isFormValid=false;
-      }
-      if(image4.length && !isValidURL(image4)){
-        formErrors.image4 = "Image URL must be a valid URL";
-        isFormValid=false;
-      }
-
-      if(!isFormValid) setErrors(formErrors);
-      else{ 
+      setHasSubmitted(true);
+      if (!Object.values(errors).length){ 
         spot = { ...spot, address,  city,  state,  country, name, description,  price };
 
         const spotImageArr = [
@@ -141,22 +127,25 @@ function SpotForm( {spot, spotImage,formType}){
           { url: image4, preview: false },
         ].filter(image => image.url);
         //formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot, spotImageArr)
-        const data = await dispatch(createSpot(spot, spotImageArr));
-        if(data && data.id){
-          setErrors({});
-          navigate(`/spots/${data.id}`);
-          reset();
-        }
-        if(data && data.errors) {
-          setErrors(data.errors);
-        }
-        // .then(data => ).catch(async (res) => {
-        //   const data = await res.json();
-        //   console.log("data :", data);
-        //   if (data && data.errors) {
-        //     setErrors(data.errors);
-        //   }
-        // });        
+       
+        dispatch(createSpot(spot, spotImageArr))
+          .then((data) => {
+            if (data.id) {
+              console.log("data :", data.id);
+              setErrors({});
+              navigate(`/spots/${data.id}`);
+              setHasSubmitted(false);
+              reset();
+            }
+          })
+          .catch(async (res) => {
+            const data = await res.json();
+            console.log("ERROR data :", data);
+            if (data && data.errors) {              
+              setHasSubmitted(true);
+              setErrors(data.errors);
+            }
+          });        
       }
     };
     
@@ -174,7 +163,7 @@ function SpotForm( {spot, spotImage,formType}){
               reservation.
             </p>
           </div>
-          <label htmlFor="country">Country</label><span className='errors'>{errors.country && `  ${errors.country}`}</span>
+          <label htmlFor="country">Country</label><span className='errors'>{hasSubmitted && errors.country && `  ${errors.country}`}</span>
           <input
             type="text"
             id="country"
@@ -182,9 +171,8 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Country" 
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-            required
           />
-          <label htmlFor="address">Street Address</label><span className='errors'>{errors.address && `  ${errors.address}`}</span>
+          <label htmlFor="address">Street Address</label><span className='errors'>{hasSubmitted && errors.address && `  ${errors.address}`}</span>
           <input
             type="text"
             id="address"
@@ -192,21 +180,19 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Street Address" 
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required
           />
           <div>
-            <label htmlFor="city">City</label><span className='errors'>{errors.city && `  ${errors.city}`}</span>
+            <label htmlFor="city">City</label><span className='errors'>{hasSubmitted && errors.city && `  ${errors.city}`}</span>
             <input type="text" id="city" name="city" placeholder="City" 
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            required
              />
             <span>,</span>
-            <label htmlFor="state">State</label><span className='errors'>{errors.state && `  ${errors.state}`}</span>
+            <label htmlFor="state">State</label><span className='errors'>{hasSubmitted && errors.state && `  ${errors.state}`}</span>
             <input type="text" id="state" name="state" placeholder="State" 
             value={state}
             onChange={(e) => setState(e.target.value)} 
-            required />
+          />
           </div>
         </div>
         <div className="form-section">
@@ -227,9 +213,8 @@ function SpotForm( {spot, spotImage,formType}){
             className="description-input" 
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            required
           /> 
-          <div className='errors'>{errors.description && `  ${errors.description}`}</div>
+          <div className='errors'>{hasSubmitted && errors.description && `  ${errors.description}`}</div>
         </div>
         <div className="form-section">
           <div className="form-section-header">
@@ -247,9 +232,8 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Name of your spot" 
             value={name}
             onChange={(e) => setName(e.target.value)}
-            required
           />
-          <div className='errors'>{errors.name && `  ${errors.name}`}</div>
+          <div className='errors'>{hasSubmitted && errors.name && `  ${errors.name}`}</div>
         </div>
         <div className="form-section">
           <div className="form-section-header">
@@ -268,9 +252,8 @@ function SpotForm( {spot, spotImage,formType}){
               placeholder="Price per night (USD)" 
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              required
             />
-            <div className='errors'>{errors.price && `  ${errors.price}`}</div>
+            <div className='errors'>{hasSubmitted && errors.price && `  ${errors.price}`}</div>
           </div>
         </div>
         <div className="form-section">
@@ -281,31 +264,30 @@ function SpotForm( {spot, spotImage,formType}){
           <input type="url" name="previewImage" placeholder="Preview Image URL" 
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
-            required
             />
-          <div className='errors'>{errors.previewImage && `  ${errors.previewImage}`}</div>
+          <div className='errors'>{hasSubmitted && errors.previewImage && `  ${errors.previewImage}`}</div>
           <input type="url" name="image1" placeholder="Image URL" 
             value={image1}
             onChange={(e) => setimage1(e.target.value)} />
-          <div className='errors'>{errors.image1 && `  ${errors.image1}`}</div>
+          <div className='errors'>{hasSubmitted && errors.image1 && `  ${errors.image1}`}</div>
           <input type="url" name="image2" placeholder="Image URL" 
             value={image2}
             onChange={(e) => setimage2(e.target.value)}
           />
-          <div className='errors'>{errors.image2 && `  ${errors.image2}`}</div>
+          <div className='errors'>{hasSubmitted && errors.image2 && `  ${errors.image2}`}</div>
           <input type="url" name="image3" placeholder="Image URL" 
             value={image3}
             onChange={(e) => setimage3(e.target.value)}
           />
-          <div className='errors'>{errors.image3 && `  ${errors.image3}`}</div>
+          <div className='errors'>{hasSubmitted && errors.image3 && `  ${errors.image3}`}</div>
           <input type="url" name="image4" placeholder="Image URL" 
             value={image4}
             onChange={(e) => setimage4(e.target.value)}
           />
-          <div className='errors'>{errors.image4 && `  ${errors.image4}`}</div>
+          <div className='errors'>{hasSubmitted && errors.image4 && `  ${errors.image4}`}</div>
         </div>
         <button type="submit" className="create-spot-button" 
-         disabled={Object.values(errors).length}
+        //  disabled={Object.values(errors).length}
           >
           {formType === 'Create Spot'? "Create Spot": "Update Spot"}
         </button>
