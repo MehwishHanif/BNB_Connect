@@ -8,3 +8,16 @@
     justify-content: space-between;
     margin: 10px;
 }
+
+.nav-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width: 50%
+}
+.nav-title{
+    width: 50%
+}
+.nav-profile-btn{
+    margin-left: 40px;
+}

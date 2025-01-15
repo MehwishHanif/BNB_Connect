@@ -1,0 +1,25 @@
+
+.spot-form input{
+    border: 1px black solid;
+    height: 1.5em;
+    border-radius: 5px;
+}
+
+.description-input{
+    height: 8rem !important;
+}
+
+.spot-form{
+    max-width: 50%;
+  width: 100%;
+  margin: 0% auto;
+  padding: 20px;
+  position: relative;
+  top: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.errors{
+    color: red;
+}
