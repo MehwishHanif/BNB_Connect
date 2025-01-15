@@ -47,7 +47,7 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
           </p>
         </div>
         <div className="reviews-list">
-          {!reviews.length && spotOwnerId !== sessionUser.id && (
+          {sessionUser && !reviews.length && spotOwnerId !== sessionUser?.id && (
             <p>Be the first to post a review!</p>
           )}
           {reviews?.map((review) => (
