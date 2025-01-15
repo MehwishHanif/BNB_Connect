@@ -33,7 +33,7 @@ export const createSpot = (spot, spotImages) => async (dispatch) => {
 
   if (response.ok) {   
     for (const spotImage of spotImages) {
-        const ImageId = await dispatch(addImagesToSpot(spotData.id, spotImage));
+        await dispatch(addImagesToSpot(spotData.id, spotImage));
               
     }             
   }
