@@ -1,0 +1,25 @@
+.manage-create-spot-button{
+    background-color: rgb(214, 87, 87);
+    color: white;
+}
+
+.user-spots-index {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.manage-spots-header{
+    padding: 20px;
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.update-delete-button button{
+    color: white;
+    background-color: rgb(177, 77, 77);
+    margin: 5px;
+}

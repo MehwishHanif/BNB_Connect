@@ -79,7 +79,10 @@ const spotsReducer = (state = {}, action) => {
             updatedSpot.avgRating = 0.0;
           } else if (typeof updatedSpot.avgRating === "number") {
             updatedSpot.avgRating = updatedSpot.avgRating.toFixed(1);
+          } else {
+            updatedSpot.avgRating = Number(updatedSpot.avgRating || 0).toFixed(1);
           }
+
           spotsState[spot.id] = updatedSpot;
         });
         return spotsState;

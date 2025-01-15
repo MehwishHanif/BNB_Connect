@@ -15,7 +15,7 @@ function SpotsIndex() {
   return (
     <div className='spots-index'>
         {spots?.map((spot) => (
-            <SpotIndexItem key={spot.id} spot={spot}  />
+            <SpotIndexItem key={spot.id} spot={spot} actionType="Get All Spots" />
         ))}
     </div>
   );
