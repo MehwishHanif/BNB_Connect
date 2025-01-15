@@ -19,31 +19,22 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
       });
     }, [dispatch, spotId]);
 
+    let ratingContent = !avgStarRating ? (
+      <p><FaStar /> New</p>
+      ) : (
+      <p>
+          <FaStar /> 
+          <span> {avgStarRating.toFixed(1)}</span> 
+          <span > &middot; </span> 
+          <span> {numReviews > 1 ? `# ${numReviews} reviews` : `# ${numReviews} review`}</span>
+      </p>
+    );
+
     return (
       <div className="reviews-section">
         <div className="reviews-header">
           <p>
-            {numReviews === 0 ? (
-              <>
-                <FaStar /> <span>New</span>
-              </>
-            ) : numReviews === 1 ? (
-              <>
-                <FaStar />
-                <span>
-                  {typeof avgStarRating === 'number' ? avgStarRating?.toFixed(1) : null} &middot; {` # ${numReviews} `}{" "}
-                  review
-                </span>
-              </>
-            ) : (
-              <>
-                <FaStar />
-                <span>
-                {typeof avgStarRating === 'number' ? avgStarRating?.toFixed(1) : null} &middot; {` # ${numReviews} `}{" "}
-                  reviews
-                </span>
-              </>
-            )}
+          {ratingContent}
           </p>
         </div>
         <div className="reviews-list">

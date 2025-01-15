@@ -22,6 +22,17 @@ function SpotShow(){
         e.preventDefault();
         alert("Feature Coming Soon...");
     }
+
+    let ratingContent = !spot?.avgStarRating ? (
+      <p><FaStar /> New</p>
+      ) : (
+      <p>
+          <FaStar /> 
+          <span> {spot?.avgStarRating.toFixed(1)}</span> 
+          <span > &middot; </span> 
+          <span> {spot?.numReviews > 1 ? `# ${spot?.numReviews} reviews` : `# ${spot?.numReviews} review`}</span>
+      </p>
+    );
     return (
       <div className="spot-details">
         <header className="spot-header">
@@ -50,12 +61,7 @@ function SpotShow(){
               <p>{`$${spot?.price?.toFixed(2)}`}</p>
               <p> </p>
               <p>
-                {spot?.numReviews === 0
-                  ? (<><FaStar /> <span>New</span></>)
-                  : spot?.numReviews === 1
-                  ? (<><FaStar /><span>{ typeof spot?.avgStarRating === 'number' ?  spot?.avgStarRating?.toFixed(1) : null} &middot; {` # ${spot?.numReviews} `} review</span></>)
-                  : (<><FaStar /><span>{ typeof spot?.avgStarRating === 'number' ?  spot?.avgStarRating?.toFixed(1) : null} &middot; {` # ${spot?.numReviews} `} reviews</span></>)
-                }
+              {ratingContent}
               </p>
             </div>
             <button className="spot-reserve-button" onClick={handleReserve}>Reserve</button>

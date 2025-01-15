@@ -3,7 +3,14 @@ import { NavLink } from 'react-router-dom';
 import './SpotIndexItem.css';
 
 function SpotIndexItem({ spot }){
-    
+  let ratingContent = !spot.avgRating ? (
+    <><FaStar /> New</>
+    ) : (
+    <>
+        <FaStar /> 
+        <span> {spot?.avgRating?.toFixed(1)}</span> 
+    </>
+    );
     return (
       <NavLink to={`/spots/${spot?.id}`}>
         <div className="spot-tile">
@@ -16,7 +23,7 @@ function SpotIndexItem({ spot }){
                 {spot?.city}, {spot?.state}
               </div>
               <div>
-                <FaStar /> { typeof spot?.avgRating === 'number' ? spot?.avgRating?.toFixed(1) : "New"}
+                {ratingContent}
               </div>
             </div>
             <div className="spot-tile-desc-second">

@@ -76,16 +76,15 @@ function SpotForm( {spot, spotImage,formType}){
 
     function prefillDummyData(e) {
         e.preventDefault();
-        setAddress('');
-        setCity('');
-        setState('');
-        setCountry('');
-        setName('');
-        setDescription('');
-        setPrice('');
-        //setPreviewImage();
+        setAddress('123 Gaslamp street');
+        setCity('San Diego');
+        setState('California');
+        setCountry('United States of America');
+        setName('The Nook');
+        setDescription('Welcome to The Nook, a cozy and charming retreat designed for relaxation and simplicity.');
+        setPrice('345');
+        setPreviewImage('https://images.unsplash.com/photo-1508330570239-ce7cabceee22?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NjB8fGhvdXNlfGVufDB8fDB8fHww');
 
-        // console.log("Prefill dummy data triggered!");
     }
     const reset = () => {
       setAddress('');
@@ -112,74 +111,11 @@ function SpotForm( {spot, spotImage,formType}){
         "i"
       );
       return urlPattern.test(string);
-    }
-      // { address,  city,  state,  country, name, description,  price , previewImage, image1, image2, image3, image4 };
+    }      
 
     const handleSubmit =  (e) => {
       e.preventDefault();
       setHasSubmitted(true);
-      // const formErrors = {};
-      // let isFormValid = true;
-
-      // if(!address.length){
-      //   isFormValid=false;
-      //   formErrors.address = "Address is required";
-      // }
-      // if(!city.length){
-      //   isFormValid=false;
-      //   formErrors.city = "City is required";
-      // }
-      // if(!state.length){
-      //   isFormValid=false;
-      //   formErrors.state = "State is required";
-      // }
-      // if(!country.length){
-      //   formErrors.country = "Country is required";
-      //   isFormValid=false;
-      // }
-      // if(!name.length){
-      //   formErrors.name = "Name is required";
-      //   isFormValid=false;
-      // }
-      // if(!description.length){
-      //   formErrors.description = "Description is required";
-      //   isFormValid=false;
-      // }
-      // if(!price.length){
-      //   formErrors.price = "Price is required";
-      //   isFormValid=false;
-      // }
-      // if(!previewImage.length){
-      //   formErrors.previewImage = "Preview image is required";
-      //   isFormValid=false;
-      // }
-      // if(description.length && description.length < 30){
-      //   formErrors.description = "Description needs 30 or more characters";
-      //   isFormValid=false;
-      // }
-      // if(previewImage.length && !isValidURL(previewImage)){
-      //   formErrors.previewImage = "Image URL must be a valid URL";
-      //   isFormValid=false;
-      // }
-      // if(image1.length && !isValidURL(image1)){
-      //   formErrors.image1 = "Image URL must be a valid URL";
-      //   isFormValid=false;
-      // }
-      // if(image2.length && !isValidURL(image2)){
-      //   formErrors.image2 = "Image URL must be a valid URL";
-      //   isFormValid=false;
-      // }
-      // if(image3.length && !isValidURL(image3)){
-      //   formErrors.image3 = "Image URL must be a valid URL";
-      //   isFormValid=false;
-      // }
-      // if(image4.length && !isValidURL(image4)){
-      //   formErrors.image4 = "Image URL must be a valid URL";
-      //   isFormValid=false;
-      // }// if(!isFormValid) setErrors(formErrors);
-      // setErrors(formErrors);
-      
-      
       if (!Object.values(errors).length){ 
         spot = { ...spot, address,  city,  state,  country, name, description,  price };
 
@@ -191,15 +127,7 @@ function SpotForm( {spot, spotImage,formType}){
           { url: image4, preview: false },
         ].filter(image => image.url);
         //formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot, spotImageArr)
-        // const data = await dispatch(createSpot(spot, spotImageArr));
-        // if(data && data.id){
-        //   setErrors({});
-        //   navigate(`/spots/${data.id}`);
-        //   reset();
-        // }
-        // if(data && data.errors) {
-        //   setErrors(data.errors);
-        // }
+       
         dispatch(createSpot(spot, spotImageArr))
           .then((data) => {
             if (data.id) {
@@ -243,7 +171,6 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Country" 
             value={country}
             onChange={(e) => setCountry(e.target.value)}
-       //     required
           />
           <label htmlFor="address">Street Address</label><span className='errors'>{hasSubmitted && errors.address && `  ${errors.address}`}</span>
           <input
@@ -253,21 +180,18 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Street Address" 
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-         //   required
           />
           <div>
             <label htmlFor="city">City</label><span className='errors'>{hasSubmitted && errors.city && `  ${errors.city}`}</span>
             <input type="text" id="city" name="city" placeholder="City" 
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            // required
              />
             <span>,</span>
             <label htmlFor="state">State</label><span className='errors'>{hasSubmitted && errors.state && `  ${errors.state}`}</span>
             <input type="text" id="state" name="state" placeholder="State" 
             value={state}
             onChange={(e) => setState(e.target.value)} 
-          //  required 
           />
           </div>
         </div>
@@ -289,7 +213,6 @@ function SpotForm( {spot, spotImage,formType}){
             className="description-input" 
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-           // required
           /> 
           <div className='errors'>{hasSubmitted && errors.description && `  ${errors.description}`}</div>
         </div>
@@ -309,7 +232,6 @@ function SpotForm( {spot, spotImage,formType}){
             placeholder="Name of your spot" 
             value={name}
             onChange={(e) => setName(e.target.value)}
-           // required
           />
           <div className='errors'>{hasSubmitted && errors.name && `  ${errors.name}`}</div>
         </div>
@@ -330,7 +252,6 @@ function SpotForm( {spot, spotImage,formType}){
               placeholder="Price per night (USD)" 
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-           //   required
             />
             <div className='errors'>{hasSubmitted && errors.price && `  ${errors.price}`}</div>
           </div>
@@ -343,7 +264,6 @@ function SpotForm( {spot, spotImage,formType}){
           <input type="url" name="previewImage" placeholder="Preview Image URL" 
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
-            //required
             />
           <div className='errors'>{hasSubmitted && errors.previewImage && `  ${errors.previewImage}`}</div>
           <input type="url" name="image1" placeholder="Image URL" 
