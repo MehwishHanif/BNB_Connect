@@ -16,7 +16,7 @@ function SpotIndexItem({ spot }){
                 {spot?.city}, {spot?.state}
               </div>
               <div>
-                <FaStar /> {spot?.avgRating ? spot?.avgRating?.toFixed(1) : "New"}
+                <FaStar /> { typeof spot?.avgRating === 'number' ? spot?.avgRating?.toFixed(1) : "New"}
               </div>
             </div>
             <div className="spot-tile-desc-second">
