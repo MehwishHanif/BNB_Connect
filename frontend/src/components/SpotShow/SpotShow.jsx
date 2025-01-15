@@ -53,8 +53,8 @@ function SpotShow(){
                 {spot?.numReviews === 0
                   ? (<><FaStar /> <span>New</span></>)
                   : spot?.numReviews === 1
-                  ? (<><FaStar /><span>{spot?.avgStarRating?.toFixed(1)} &middot; {` # ${spot?.numReviews} `} review</span></>)
-                  : (<><FaStar /><span>{spot?.avgStarRating?.toFixed(1)} &middot; {` # ${spot?.numReviews} `} reviews</span></>)
+                  ? (<><FaStar /><span>{ typeof spot?.avgStarRating === 'number' ?  spot?.avgStarRating?.toFixed(1) : null} &middot; {` # ${spot?.numReviews} `} review</span></>)
+                  : (<><FaStar /><span>{ typeof spot?.avgStarRating === 'number' ?  spot?.avgStarRating?.toFixed(1) : null} &middot; {` # ${spot?.numReviews} `} reviews</span></>)
                 }
               </p>
             </div>

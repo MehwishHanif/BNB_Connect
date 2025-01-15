@@ -31,7 +31,7 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
               <>
                 <FaStar />
                 <span>
-                  {avgStarRating?.toFixed(1)} &middot; {` # ${numReviews} `}{" "}
+                  {typeof avgStarRating === 'number' ? avgStarRating?.toFixed(1) : null} &middot; {` # ${numReviews} `}{" "}
                   review
                 </span>
               </>
@@ -39,7 +39,7 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
               <>
                 <FaStar />
                 <span>
-                  {avgStarRating?.toFixed(1)} &middot; {` # ${numReviews} `}{" "}
+                {typeof avgStarRating === 'number' ? avgStarRating?.toFixed(1) : null} &middot; {` # ${numReviews} `}{" "}
                   reviews
                 </span>
               </>
