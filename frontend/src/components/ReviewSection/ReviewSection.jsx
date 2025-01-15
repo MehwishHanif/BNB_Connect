@@ -24,7 +24,7 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
       ) : (
       <p>
           <FaStar /> 
-          <span> {avgStarRating.toFixed(1)}</span> 
+          <span> {avgStarRating?.toFixed(1)}</span> 
           <span > &middot; </span> 
           <span> {numReviews > 1 ? `# ${numReviews} reviews` : `# ${numReviews} review`}</span>
       </p>
