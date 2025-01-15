@@ -23,7 +23,6 @@ export const getSpotReviews = (spotId) => async (dispatch) => {
     if (response.ok) {    
         dispatch(loadSpotReviews(data.Reviews));      
     }
-    console.log("DATA: ",data);
     return response;
 }
 

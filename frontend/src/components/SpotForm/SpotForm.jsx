@@ -1,8 +1,12 @@
 import './SpotForm.css';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { createSpot } from '../../store/spots';
+import { useDispatch } from 'react-redux';
 
 function SpotForm( {spot, spotImage,formType}){
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [address, setAddress] = useState(spot?.address);
     const [city, setCity] = useState(spot?.city);
     const [state, setState] = useState(spot?.state);
@@ -24,30 +28,30 @@ function SpotForm( {spot, spotImage,formType}){
    
     function prefillDummyData(e) {
         e.preventDefault();
-        setAddress();
-        setCity();
-        setState();
-        setCountry();
-        setName();
-        setDescription();
-        setPrice();
+        setAddress('');
+        setCity('');
+        setState('');
+        setCountry('');
+        setName('');
+        setDescription('');
+        setPrice('');
         //setPreviewImage();
 
-        console.log("Prefill dummy data triggered!");
+        // console.log("Prefill dummy data triggered!");
     }
     const reset = () => {
-      setAddress();
-      setCity();
-       setState();
-       setCountry();
-        setName();
-        setDescription();
-        setPrice();
-        setPreviewImage();
-        setimage1();
-        setimage2();
-        setimage3();
-        setimage4();
+      setAddress('');
+      setCity('');
+       setState('');
+       setCountry('');
+        setName('');
+        setDescription('');
+        setPrice('');
+        setPreviewImage('');
+        setimage1('');
+        setimage2('');
+        setimage3('');
+        setimage4('');
     };
     
     function isValidURL(string) {
@@ -63,7 +67,7 @@ function SpotForm( {spot, spotImage,formType}){
     }
       // { address,  city,  state,  country, name, description,  price , previewImage, image1, image2, image3, image4 };
 
-    const handleSubmit =  (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
       const formErrors = {};
       let isFormValid = true;
@@ -127,32 +131,33 @@ function SpotForm( {spot, spotImage,formType}){
 
       if(!isFormValid) setErrors(formErrors);
       else{ 
-        console.log("no validation errors");
+        spot = { ...spot, address,  city,  state,  country, name, description,  price };
 
-        reset();
+        const spotImageArr = [
+          { url: previewImage, preview: true },
+          { url: image1, preview: false },
+          { url: image2, preview: false },
+          { url: image3, preview: false },
+          { url: image4, preview: false },
+        ].filter(image => image.url);
+        //formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot, spotImageArr)
+        const data = await dispatch(createSpot(spot, spotImageArr));
+        if(data && data.id){
+          setErrors({});
+          navigate(`/spots/${data.id}`);
+          reset();
+        }
+        if(data && data.errors) {
+          setErrors(data.errors);
+        }
+        // .then(data => ).catch(async (res) => {
+        //   const data = await res.json();
+        //   console.log("data :", data);
+        //   if (data && data.errors) {
+        //     setErrors(data.errors);
+        //   }
+        // });        
       }
-      // spot = { ...spot, address,  city,  state,  country, name, description,  price };
-      // const spotImageArr = [
-      //   { url: previewImage, preview: true },
-      //   { url: image1, preview: false },
-      //   { url: image2, preview: false },
-      //   { url: image3, preview: false },
-      //   { url: image4, preview: false },
-      // ].filter(image => image.url);
-      // spotImage = { ...spotImage, ...previewImage, ...image1, ... };
-      //const spotImageArr = [];
-
-      // dispatch(
-      //   formType === "Create Spot" ? createSpot(spot) : updateSpot(spot)
-      // ).catch(async (res) => {
-      //   const data = await res.json();
-      //   console.log("data :", data);
-      //   if (data && data.errors) {
-      //     setErrors(data.errors);
-      //   }
-      // });
-            
-      
     };
     
     return (

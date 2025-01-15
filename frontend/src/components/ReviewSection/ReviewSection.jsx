@@ -13,7 +13,6 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
     useEffect(() => {
       dispatch(getSpotReviews(spotId)).catch(async (res) => {
         const data = await res.json();
-        console.log("data :", data);
         if (data && data.message) {
           dispatch(resetReviews());
         }
