@@ -1,7 +1,7 @@
 import './SpotForm.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { createSpot } from '../../store/spots';
+import { createSpot , updateSpot} from '../../store/spots';
 import { useDispatch } from 'react-redux';
 
 function SpotForm( {spot, spotImage,formType}){
@@ -22,10 +22,6 @@ function SpotForm( {spot, spotImage,formType}){
     const [image2, setimage2] = useState(spotImage?.image2);
     const [image3, setimage3] = useState(spotImage?.image3);
     const [image4, setimage4] = useState(spotImage?.image4);
-
-    // useEffect(() => {
-    //      setErrors({});
-    // }, []);
    
     useEffect(() =>{
       const formErrors = {};
@@ -50,29 +46,29 @@ function SpotForm( {spot, spotImage,formType}){
       if(!price.length){
         formErrors.price = "Price is required";
       }
-      if(!previewImage.length){
+      if(formType === "Create Spot" && !previewImage.length){
         formErrors.previewImage = "Preview image is required";
       }      
       if(description.length && description.length < 30){
         formErrors.description = "Description needs 30 or more characters";
       }
-      if(previewImage.length && !isValidURL(previewImage)){
+      if(formType === "Create Spot" && previewImage.length && !isValidURL(previewImage)){
         formErrors.previewImage = "Image URL must be a valid URL";
       }
-      if(image1.length && !isValidURL(image1)){
+      if(formType === "Create Spot" && image1.length && !isValidURL(image1)){
         formErrors.image1 = "Image URL must be a valid URL";
       }
-      if(image2.length && !isValidURL(image2)){
+      if(formType === "Create Spot" && image2.length && !isValidURL(image2)){
         formErrors.image2 = "Image URL must be a valid URL";
       }
-      if(image3.length && !isValidURL(image3)){
+      if(formType === "Create Spot" && image3.length && !isValidURL(image3)){
         formErrors.image3 = "Image URL must be a valid URL";
       }
-      if(image4.length && !isValidURL(image4)){
+      if(formType === "Create Spot" && image4.length && !isValidURL(image4)){
         formErrors.image4 = "Image URL must be a valid URL";
       }          
       setErrors(formErrors);
-    },[address, city, state, country,name,description,price, previewImage, image1, image2, image3, image4]);
+    },[formType, address, city, state, country,name,description,price, previewImage, image1, image2, image3, image4]);
 
     function prefillDummyData(e) {
         e.preventDefault();
@@ -126,12 +122,11 @@ function SpotForm( {spot, spotImage,formType}){
           { url: image3, preview: false },
           { url: image4, preview: false },
         ].filter(image => image.url);
-        //formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot, spotImageArr)
+        //formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot)
        
-        dispatch(createSpot(spot, spotImageArr))
+        dispatch(formType === "Create Spot" ? createSpot(spot, spotImageArr) : updateSpot(spot))
           .then((data) => {
             if (data.id) {
-              console.log("data :", data.id);
               setErrors({});
               navigate(`/spots/${data.id}`);
               setHasSubmitted(false);
@@ -140,7 +135,6 @@ function SpotForm( {spot, spotImage,formType}){
           })
           .catch(async (res) => {
             const data = await res.json();
-            console.log("ERROR data :", data);
             if (data && data.errors) {              
               setHasSubmitted(true);
               setErrors(data.errors);
@@ -151,10 +145,14 @@ function SpotForm( {spot, spotImage,formType}){
     
     return (
       <form className="spot-form" onSubmit={handleSubmit}>
-        <h1 className="form-title">Create a New Spot</h1>
-        <a href="#" onClick={prefillDummyData}>
+        {formType === "Create Spot"
+          ? 
+          (<h1 className="form-title">Create a New Spot</h1>)
+          :(<h1 className="form-title">Update your Spot</h1>)
+        }
+        { formType === "Create Spot" && (<a href="#" onClick={prefillDummyData}>
           * Click here to fill dummy data
-        </a>
+        </a> )}
         <div className="form-section">
           <div className="form-section-header">
             <h3>Where&apos;s your place located?</h3>
@@ -256,7 +254,7 @@ function SpotForm( {spot, spotImage,formType}){
             <div className='errors'>{hasSubmitted && errors.price && `  ${errors.price}`}</div>
           </div>
         </div>
-        <div className="form-section">
+        {formType === "Create Spot" && (<div className="form-section">
           <div className="form-section-header">
             <h3>Liven up your spot with photos</h3>
             <p>Submit a link to at least one photo to publish your spot.</p>
@@ -286,6 +284,7 @@ function SpotForm( {spot, spotImage,formType}){
           />
           <div className='errors'>{hasSubmitted && errors.image4 && `  ${errors.image4}`}</div>
         </div>
+         )}
         <button type="submit" className="create-spot-button" 
         //  disabled={Object.values(errors).length}
           >

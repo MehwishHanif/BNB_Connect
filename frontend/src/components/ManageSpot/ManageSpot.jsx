@@ -8,7 +8,6 @@ import SpotIndexItem from '../SpotsIndex/SpotIndexItem';
 function ManageSpot(){
     const dispatch = useDispatch();
     const spots = useSelector(selectUserSpotsArray);
-    console.log(spots?.id);
 
     useEffect(() => {
         dispatch(getUserSpots());

@@ -31,6 +31,7 @@ export const selectUserSpotsArray = createSelector(selectUserSpots, (spots) =>{
    return Object.values(spots);
 });
 
+// export const selectSpotById = (spotId) => (state) => state.session.spots[spotId]; 
 
 /*------------------------ Thunk Action Creators ----------------- */
 

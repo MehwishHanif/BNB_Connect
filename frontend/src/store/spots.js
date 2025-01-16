@@ -21,6 +21,26 @@ export const getAllSpots = () => async (dispatch) => {
     return response;
 }
 
+export const updateSpot = (spot) => async () => {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price
+    }),
+  });
+  const spotData = await response.json();
+  if (response.ok) {
+    return spotData;
+  }
+  return response;
+}
 
 export const createSpot = (spot, spotImages) => async (dispatch) => {
   const response = await csrfFetch('/api/spots',{

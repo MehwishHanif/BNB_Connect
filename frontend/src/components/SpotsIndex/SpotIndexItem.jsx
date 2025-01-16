@@ -1,9 +1,14 @@
 import { FaStar } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './SpotIndexItem.css';
+import { useNavigate } from 'react-router-dom';
 
 function SpotIndexItem({ spot , actionType}){
-  console.log("actionType: ",actionType);
+  const navigate = useNavigate();
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    navigate(`/spots/${spot?.id}/edit`);
+  }
   let ratingContent = !spot.avgRating ? (
     <><FaStar /> New</>
     ) : (
@@ -33,8 +38,7 @@ function SpotIndexItem({ spot , actionType}){
           </div>
           {actionType === "Get User Spots" && (
             <div className='update-delete-button'>
-            {/* `/spots/${spot?.id}/edit` */}
-              <button><NavLink to={`/`}>Update</NavLink></button>
+              <button onClick={handleUpdate}>Update</button>
               <button>Delete</button>
             </div>
           )}
