@@ -4,7 +4,7 @@ import { deleteUserSpot } from '../../store/session';
 
 function DeleteSpotModal({spotId}){
 
-    console.log(spotId);
+    
     const { closeModal } = useModal();
     const dispatch = useDispatch();
 
@@ -13,9 +13,9 @@ function DeleteSpotModal({spotId}){
         closeModal();
     }
 
-    const handleDelete = (e) => {
+    const handleDelete = async (e) => {
         e.preventDefault();
-         dispatch(deleteUserSpot(spotId));
+        await dispatch(deleteUserSpot(spotId));
         closeModal();
     }
 
