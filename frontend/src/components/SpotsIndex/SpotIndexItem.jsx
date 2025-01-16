@@ -2,11 +2,20 @@ import { FaStar } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './SpotIndexItem.css';
 import { useNavigate } from 'react-router-dom';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import DeleteSpotModal from '../DeleteSpotModal';
 
 function SpotIndexItem({ spot , actionType}){
   const navigate = useNavigate();
+  
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+  }
   const handleUpdate = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     navigate(`/spots/${spot?.id}/edit`);
   }
   let ratingContent = !spot.avgRating ? (
@@ -39,7 +48,11 @@ function SpotIndexItem({ spot , actionType}){
           {actionType === "Get User Spots" && (
             <div className='update-delete-button'>
               <button onClick={handleUpdate}>Update</button>
-              <button>Delete</button>
+              <OpenModalButton 
+                buttonText="Delete"
+                onButtonClick={handleDeleteClick}
+                modalComponent={<DeleteSpotModal spotId={spot?.id} />}
+              />
             </div>
           )}
         </div>
