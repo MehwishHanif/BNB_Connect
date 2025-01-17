@@ -1,6 +1,7 @@
 
 .errors{
     color: red;
+    height: 18px;
 }
 
 .login-form{
@@ -12,8 +13,10 @@
 }
 
 .login-header{
-    font-size:large;
-    color:brown;
+    font-size: xx-large;
+  font-weight: 600;
+  padding: 24px;
+  color: #b5264e;
 }
 
 .login-modal{
@@ -23,6 +26,11 @@
     gap: 20px;
     padding-top: 14px;
     padding-bottom: 30px;
+    background-color: lightgray;
+    overflow: hidden;
+}
+.login-modal input{
+    background-color: whitesmoke;
 }
 
 .login-modal input{
@@ -35,5 +43,30 @@
 
 .login-button{
     align-self: center;
+    cursor: pointer;
     display: block;
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #b5264e;
+    color: #fff;
+     border-radius: 5px;
+    box-shadow: 2px 2px 2px gray;
+    cursor: pointer; 
+    margin-bottom: 5px;
+}
+
+.login-button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.demo-user-login{
+    align-self: center; 
+    text-decoration: underline;
+    padding: 16px;
+}
+
+.demo-user-login:hover{
+    cursor: pointer;
 }

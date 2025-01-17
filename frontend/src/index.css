@@ -4,3 +4,8 @@
 #root{
     padding: 10px;
 }
+body{
+    background-color: lightgray;
+    font-family: Geneva, Tahoma, sans-serif;
+    color: #222020;
+}

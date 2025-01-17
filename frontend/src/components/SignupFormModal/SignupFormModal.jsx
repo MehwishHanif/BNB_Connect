@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -14,10 +14,37 @@ function SignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+   useEffect(() => {
+      if (!confirmPassword.length || !email.length || firstName.length < 2 || lastName.length < 2 || username.trim().length < 4 ||   password.trim().length < 6 ) {
+        setIsButtonDisabled(true);
+      } else {
+        setIsButtonDisabled(false);
+      }
+    }, [username, password, email, confirmPassword, firstName, lastName ]);
+
+  function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
+    if (password !== confirmPassword){
+      setErrors({
+        ...errors,
+        confirmPassword: "Confirm Password must be the same as the Password"
+      });
+    } 
+    if(!isValidEmail(email)){
+      setErrors({
+        ...errors,
+        email: "Please provide a valid email."
+      });
+    }   
+
+    if (password === confirmPassword && isValidEmail(email)) {
       setErrors({});
       return dispatch(
         sessionActions.signup({
@@ -36,9 +63,6 @@ function SignupFormModal() {
           }
         });
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
   };
 
   return (
@@ -115,7 +139,9 @@ function SignupFormModal() {
         <div className="errors">
           {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </div>
-        <button type="submit" className='signup-button'>Sign Up</button>
+        <button type="submit" 
+          disabled={isButtonDisabled}
+          className='signup-button'>Sign Up</button>
       </form>
     </div>
   );

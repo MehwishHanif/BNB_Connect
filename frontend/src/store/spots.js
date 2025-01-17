@@ -18,9 +18,30 @@ export const getAllSpots = () => async (dispatch) => {
     if (response.ok) {    
         dispatch(loadSpots(data.Spots));      
     }
-    return response;
+
+    return data;
 }
 
+export const updateSpot = (spot) => async () => {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price
+    }),
+  });
+  const spotData = await response.json();
+  if (response.ok) {
+    return spotData;
+  }
+  return response;
+}
 
 export const createSpot = (spot, spotImages) => async (dispatch) => {
   const response = await csrfFetch('/api/spots',{
@@ -79,7 +100,10 @@ const spotsReducer = (state = {}, action) => {
             updatedSpot.avgRating = 0.0;
           } else if (typeof updatedSpot.avgRating === "number") {
             updatedSpot.avgRating = updatedSpot.avgRating.toFixed(1);
+          } else {
+            updatedSpot.avgRating = Number(updatedSpot.avgRating || 0).toFixed(1);
           }
+
           spotsState[spot.id] = updatedSpot;
         });
         return spotsState;

@@ -33,6 +33,9 @@ function SpotShow(){
           <span> {spot?.numReviews > 1 ? `# ${spot?.numReviews} reviews` : `# ${spot?.numReviews} review`}</span>
       </p>
     );
+
+    if (!spot) return <h3>Loading...</h3>;
+    
     return (
       <div className="spot-details">
         <header className="spot-header">
@@ -60,9 +63,9 @@ function SpotShow(){
             <div className="spot-info">
               <p>{`$${spot?.price}`}</p>
               <p> </p>
-              <p>
+              <span>
               {ratingContent}
-              </p>
+              </span>
             </div>
             <button className="spot-reserve-button" onClick={handleReserve}>Reserve</button>
           </div>

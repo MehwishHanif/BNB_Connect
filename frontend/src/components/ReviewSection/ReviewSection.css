@@ -1,0 +1,45 @@
+.reviews-header span{    
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.delete-review-button{
+  background-color: #b5264e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 5px;
+  padding-left: 17px;
+  padding-right: 17px;
+  font-size: 13px;
+  width: fit-content;
+}
+.post-review-button{
+    background-color: #b5264e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+  margin-top: 10px;
+  padding: 5px;
+  padding-left: 17px;
+  padding-right: 17px;
+  font-size: 13px;
+  width: fit-content;
+}
+.reviews-header p{    
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.review-date{
+    color: #767070;
+    font-size: .9rem;
+    margin: 2px 0;
+}
+
+.review-text{
+    margin-top: 10px;
+}

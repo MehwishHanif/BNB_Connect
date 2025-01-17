@@ -9,13 +9,19 @@ function SpotsIndex() {
   const spots = useSelector(selectSpotsArray);
 
   useEffect(() => {
-    dispatch(getAllSpots());
+    dispatch(getAllSpots())
+    .catch(async (res) => {
+      const data = await res.json();
+      if(data) return <h2>Oops, looks like something went wrong...</h2>
+    });
   }, [dispatch]);
 
+  if (!spots) return <h3>Loading...</h3>;
+  
   return (
     <div className='spots-index'>
         {spots?.map((spot) => (
-            <SpotIndexItem key={spot.id} spot={spot}  />
+            <SpotIndexItem key={spot.id} spot={spot} actionType="Get All Spots" />
         ))}
     </div>
   );

@@ -16,11 +16,10 @@ export const receiveSpotDetails = (spot) => ({
 export const getSpotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
     const data = await response.json();
-    if (response.ok) { 
-        // console.log(data);     
+    if (response.ok) {     
         dispatch(receiveSpotDetails(data));      
     }
-    return response;
+    return data;
 }
 
 /*-------------------------- Selectors --------------------------- */
@@ -29,20 +28,20 @@ export const selectSpotById = (spotId) => (state) => state.spotsDetails[spotId];
 
 
 /*-------------------------- Reducer ---------------------------- */
-// const initialState = { entries: {}, isLoading: true };
+
 
 const spotsDetailsReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_SPOT_DETAILS: {
       const { spot } = action;
-      // Add or update the spot in the state
+      
       return {
         ...state,
         [spot.id]: {
-          ...state[spot.id], // Preserve existing data if updating
+          ...state[spot.id], 
           ...spot,
-          SpotImages: [...spot.SpotImages], // Overwrite or set the SpotImages
-          Owner: { ...spot.Owner }, // Overwrite or set the Owner
+          SpotImages: [...spot.SpotImages], 
+          Owner: { ...spot.Owner },
           avgStarRating:typeof spot.avgStarRating === "number" 
           ? spot.avgStarRating.toFixed(1) 
           : (spot.avgStarRating === null ? 0.0 : Number(spot.avgStarRating || 0).toFixed(1)),// Convert to string with 1 decimal place

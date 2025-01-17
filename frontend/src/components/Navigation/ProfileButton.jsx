@@ -5,9 +5,11 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -32,14 +34,18 @@ function ProfileButton({ user }) {
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
-
+  const handleManageClick = () => {
+    closeMenu();
+  };
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    navigate("/");
+
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const ulClassName = showMenu ? "profile-dropdown" : "hidden";
 
   return (
     <>
@@ -51,9 +57,9 @@ function ProfileButton({ user }) {
           <>
             <li>{`Hello, ${user.firstName}`}</li>
             <li>{user.email}</li>
-            <li><NavLink to="/spots/current">Manage Spots</NavLink></li>
+            <li className='manage-spot-link'><NavLink onClick={handleManageClick} to="/spots/current">Manage Spots</NavLink></li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="logout-button" onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (

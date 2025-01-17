@@ -1,8 +1,12 @@
 import { csrfFetch } from './csrf';
+import { createSelector } from 'reselect';
 /*-------------------- Action Type Constants -------------------- */
 
 export const SET_USER = 'session/setUser';
 export const REMOVE_USER = 'session/removeUser';
+export const LOAD_USER_SPOTS = 'session/loadUserSpots';
+export const REMOVE_USER_SPOT = 'session/removeUserSpot';
+
 
 /*-------------------  Action Creators: ---------------------------*/
 
@@ -15,7 +19,48 @@ export const removeUser = () =>  ({
     type: REMOVE_USER
 });
 
+export const loadUserSpots = (spots) =>  ({
+  type: LOAD_USER_SPOTS,
+  spots
+});
+
+export const removeUserSpot = (spotId) =>  ({
+  type: REMOVE_USER_SPOT,
+  spotId
+});
+
+/*-------------------- Selectors ----------------------------------*/
+
+const selectUserSpots = (state) => state.session.spots;
+
+export const selectUserSpotsArray = createSelector(selectUserSpots, (spots) =>{
+   return Object.values(spots);
+});
+
+// export const selectSpotById = (spotId) => (state) => state.session.spots[spotId]; 
+
 /*------------------------ Thunk Action Creators ----------------- */
+
+export const deleteUserSpot = (spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" }
+  });
+  const data = await response.json();
+  if (response.ok) {
+    await dispatch(removeUserSpot(spotId));
+    return data;
+  }
+  return response;
+}
+export const getUserSpots = () => async (dispatch) => {
+    const response = await csrfFetch('/api/spots/current');
+    const data = await response.json();
+    if (response.ok) {    
+        dispatch(loadUserSpots(data.Spots));      
+    }
+    return response;
+}
 
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
@@ -74,18 +119,51 @@ export const restoreUser = () => async (dispatch) => {
 
 /*-------------------------- Reducer ---------------------------- */
 
-const initialState = {  user: null };
+const initialState = {  user: null , spots: {} };
 
 const sessionReducer = (state = initialState, action) => {
-    switch(action.type){
-        case SET_USER: {
-            return {...state, user: action.user}
-        }
-        case REMOVE_USER: {
-            return { ...state, user: null };
-        }
-        default:
-            return state;
+    switch (action.type) {
+      case SET_USER: {
+        return { ...state, user: action.user };
+      }
+      case REMOVE_USER: {
+        return { ...state, user: null, spots: {} };
+      }
+      case LOAD_USER_SPOTS: {
+        const spotsState = {};
+        action.spots.forEach((spot) => {
+          const updatedSpot = { ...spot };
+          if (typeof updatedSpot.price === "number") {
+            updatedSpot.price = updatedSpot.price.toFixed(2);
+          }
+          if (updatedSpot.avgRating === null) {
+            updatedSpot.avgRating = 0.0;
+          } else if (typeof updatedSpot.avgRating === "number") {
+            updatedSpot.avgRating = updatedSpot.avgRating.toFixed(1);
+          } else {
+            updatedSpot.avgRating = Number(updatedSpot.avgRating || 0).toFixed(
+              1
+            );
+          }
+          spotsState[updatedSpot.id] = updatedSpot;
+        });
+
+        return {
+          ...state,
+          spots: spotsState,
+        };
+      }
+      case REMOVE_USER_SPOT: {
+        const newState = {
+          ...state,
+          spots: { ...state.spots }, // Copy the spots object
+        };
+        // Delete the spot by spotId
+        delete newState.spots[action.spotId];
+        return newState;
+      }
+      default:
+        return state;
     }
 };
 
