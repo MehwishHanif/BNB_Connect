@@ -28,17 +28,29 @@ function SpotForm( {spot, spotImage,formType}){
       if(!address.length){
         formErrors.address = "Address is required";
       }
+      if(city.length && city.length > 50){
+        formErrors.city = "City must be less than 50 characters.";
+      }
       if(!city.length){
         formErrors.city = "City is required";
       }
       if(!state.length){
         formErrors.state = "State is required";
       }
+      if(state.length && state.length > 50){
+        formErrors.state = "State must be less than 50 characters.";
+      }
       if(!country.length){
         formErrors.country = "Country is required";
       }
+      if(country.length && country.length > 50){
+        formErrors.country = "Country must be less than 50 characters.";
+      }
       if(!name.length){
         formErrors.name = "Name is required";
+      }
+      if(name.length && (name.length < 2 || name.length > 50)){
+        formErrors.name = "Name must be between 2 to 50 characters.";
       }
       if(!description.length){
         formErrors.description = "Description is required";
