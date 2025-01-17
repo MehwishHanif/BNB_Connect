@@ -48,7 +48,7 @@ export const deleteUserSpot = (spotId) => async (dispatch) => {
   });
   const data = await response.json();
   if (response.ok) {
-    dispatch(removeUserSpot(spotId));
+    await dispatch(removeUserSpot(spotId));
     return data;
   }
   return response;

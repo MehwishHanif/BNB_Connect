@@ -5,6 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import ReviewFormModal from '../ReviewFormModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import DeleteReviewModal from '../DeleteRaviewModal';
+import './ReviewSection.css';
 
 function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
     const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
       e.stopPropagation();      
     }
     
+    if(!reviews) return <h3>Loading...</h3>;
 
     let ratingContent = !avgStarRating ? (
       <p><FaStar /> New</p>
@@ -48,16 +50,15 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
     return (
       <div className="reviews-section">
         <div className="reviews-header">
-          <p>
+          <span>
           {ratingContent}
-          </p>
+          </span>
         </div>
-        <div className="reviews-list">
-          {sessionUser && !reviews.length && spotOwnerId !== sessionUser?.id && (
+        {sessionUser && !reviews.length && spotOwnerId !== sessionUser?.id && (
             <p>Be the first to post a review!</p>
           )}
-          {sessionUser && spotOwnerId !== sessionUser?.id && !usersWithReviews.includes(sessionUser?.id) &&(
-            <div>
+        {sessionUser && spotOwnerId !== sessionUser?.id && !usersWithReviews.includes(sessionUser?.id) &&(
+            <div className='post-review-button'>
               <OpenModalButton 
                 buttonText="Post Your Review"
                 onButtonClick={handlePostReviewClick}
@@ -65,23 +66,26 @@ function ReviewSection({ spotId, spotOwnerId, avgStarRating, numReviews }){
               />
             </div>
           )}
+        <div className="reviews-list">          
           {reviews?.map((review) => (
             <div key={review?.id} className="spot-review">
               <h3 className="review-user">{review?.User?.firstName}</h3>
-              <p>
+              <p className='review-date'>
                 {new Date(review?.updatedAt).toLocaleDateString("en-US", {
                   year: "numeric",
                   month: "long",
                   timeZone: "UTC",
                 })}
               </p>
-              <p>{review?.review}</p>
+              <p className='review-text'>{review?.review}</p>
               {review?.User?.id === sessionUser?.id && (
-                <OpenModalButton 
-                  buttonText="Delete"
-                  onButtonClick={handleDeleteReviewClick}
-                  modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spotId} />}
-                />
+                <div className='delete-review-button'>
+                  <OpenModalButton 
+                    buttonText="Delete"
+                    onButtonClick={handleDeleteReviewClick}
+                    modalComponent={<DeleteReviewModal reviewId={review?.id} spotId={spotId} />}
+                  />
+                </div>
               )}
             </div>
           ))}

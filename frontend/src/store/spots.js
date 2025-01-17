@@ -18,7 +18,8 @@ export const getAllSpots = () => async (dispatch) => {
     if (response.ok) {    
         dispatch(loadSpots(data.Spots));      
     }
-    return response;
+
+    return data;
 }
 
 export const updateSpot = (spot) => async () => {

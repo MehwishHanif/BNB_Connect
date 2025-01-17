@@ -19,7 +19,7 @@ export const getSpotDetails = (spotId) => async (dispatch) => {
     if (response.ok) {     
         dispatch(receiveSpotDetails(data));      
     }
-    return response;
+    return data;
 }
 
 /*-------------------------- Selectors --------------------------- */

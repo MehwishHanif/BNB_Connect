@@ -9,7 +9,11 @@ function SpotsIndex() {
   const spots = useSelector(selectSpotsArray);
 
   useEffect(() => {
-    dispatch(getAllSpots());
+    dispatch(getAllSpots())
+    .catch(async (res) => {
+      const data = await res.json();
+      if(data) return <h2>Oops, looks like something went wrong...</h2>
+    });
   }, [dispatch]);
 
   if (!spots) return <h3>Loading...</h3>;

@@ -1,6 +1,7 @@
 import { useModal } from '../../context/Modal';
 import { useDispatch } from 'react-redux';
 import { deleteUserSpot } from '../../store/session';
+import './DeleteSpotModal.css';
 
 function DeleteSpotModal({spotId}){
 
@@ -15,8 +16,15 @@ function DeleteSpotModal({spotId}){
 
     const handleDelete = async (e) => {
         e.preventDefault();
-        await dispatch(deleteUserSpot(spotId));
-        closeModal();
+        await dispatch(deleteUserSpot(spotId))
+        .then(closeModal)
+        .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.message) { 
+                return <h2>Oops, the spot does not exist</h2>
+            }
+          }); 
+        
     }
 
     return (

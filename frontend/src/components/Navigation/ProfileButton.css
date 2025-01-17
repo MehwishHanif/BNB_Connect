@@ -1,11 +1,12 @@
 .profile-dropdown {
     border: 1px grey solid;
     border-radius: 5%;
-    background-color: #a9bacb;
+    /* background-color: #a9bacb; */
+    background-color: #d9c7c7;
     display: flex ;
     flex-direction: column;
     align-items: center;
-    gap: 7px;
+    gap: 14px;
     padding: 16px;
     font-size: 1rem;
     color: #c70039;

@@ -45,7 +45,12 @@ export const createReview = ( spotId, review ) => async (dispatch) => {
     const review = await response.json();
     
     await dispatch(getSpotDetails(spotId));
-    await dispatch(getSpotReviews(spotId));
+    dispatch(getSpotReviews(spotId)).catch(async (res) => {
+      const data = await res.json();
+      if (data && data.message) {
+        dispatch(resetReviews());
+      }
+    });
     return review;
   } else {
     // const  errors = await response.json();

@@ -63,9 +63,9 @@ function SpotShow(){
             <div className="spot-info">
               <p>{`$${spot?.price}`}</p>
               <p> </p>
-              <p>
+              <span>
               {ratingContent}
-              </p>
+              </span>
             </div>
             <button className="spot-reserve-button" onClick={handleReserve}>Reserve</button>
           </div>

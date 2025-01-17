@@ -10,8 +10,10 @@ function ManageSpot(){
     const spots = useSelector(selectUserSpotsArray);
 
     useEffect(() => {
-        dispatch(getUserSpots());
+        dispatch(getUserSpots())
     }, [dispatch]);
+
+    if (!spots) return <h3>Loading...</h3>;
 
     return (
         <div className="manage-spots">

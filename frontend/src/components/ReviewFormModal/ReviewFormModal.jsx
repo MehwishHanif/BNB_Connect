@@ -3,6 +3,7 @@ import StarRatingInput from "../StarRatingInput";
 import { useState, useEffect } from 'react';
 import { createReview } from '../../store/reviews';
 import { useDispatch } from 'react-redux';
+import './ReviewFormModal.css';
 
 function ReviewFormModal({ spotId }){
     const dispatch = useDispatch();

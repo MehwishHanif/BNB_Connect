@@ -6,6 +6,8 @@
     padding: 20px;
     margin-left: 3rem;
     margin-right: 3rem;
+     background-color: #d9c7c7;
+     border-radius: 1.5%;
 }
 .spot-images{
     display: grid;
@@ -40,13 +42,19 @@
     flex-direction: row;
     justify-content: space-between;
     border-bottom: 1px solid gray;
+    padding-bottom: 20px;
 }
+
 
 .spot-reserve-section{
     display: flex;
     flex-direction: column;
     gap: 20px;
     width: 35%;
+    padding: 20px;
+    border: 2px solid #615656;
+    border-radius: 8px;
+    background-color: lightgray;
 }
 .spot-description-section{
     width: 65%;
@@ -56,9 +64,35 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  font-weight: bold;
 }
 
 .spot-reserve-button{
     align-self: center;
-    background-color: rgb(215, 73, 73);
+    background-color: #b5264e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 15px;
 }
+
+.spot-header h1{
+    font-size: xx-large;
+  font-weight: 600;
+}
+.spot-location{
+    font-size: large;
+    margin-top: 20px;
+}
+.spot-header{
+    margin-bottom: 2px;
+    margin-top: 10px;
+    padding-bottom: 10px;
+}
+
+
