@@ -12,6 +12,8 @@ function SpotsIndex() {
     dispatch(getAllSpots());
   }, [dispatch]);
 
+  if (!spots) return <h3>Loading...</h3>;
+  
   return (
     <div className='spots-index'>
         {spots?.map((spot) => (

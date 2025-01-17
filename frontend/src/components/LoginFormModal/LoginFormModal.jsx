@@ -33,6 +33,18 @@ function LoginFormModal() {
       });
   };
 
+  function handleDemoLogin(e) {
+    e.preventDefault();
+    dispatch(sessionActions.login({ credential: "Demo-lition", password: "password" }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  }
+
   return (
     <div className='login-modal'>
       <h1 className='login-header'>Log In</h1>
@@ -61,6 +73,7 @@ function LoginFormModal() {
         <button type="submit" className='login-button'
           disabled={isButtonDisabled}
          >Log In</button>
+         <a href="#" onClick={handleDemoLogin} className="demo-user-login" >Log in as Demo User</a>
       </form>
     </div>
   );

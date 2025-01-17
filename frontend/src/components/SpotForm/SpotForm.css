@@ -3,12 +3,22 @@
     border: 1px black solid;
     height: 1.5em;
     border-radius: 5px;
+    padding-left: 5px;
 }
 
 .description-input{
     height: 8rem !important;
+    width: 100%;
+    margin-top: 12px;
 }
-
+.spot-form input{
+    background-color: whitesmoke;
+}
+.spot-form label{
+    padding-top: 4px;
+    padding-bottom: 2px;
+    padding-right: 4px;
+}
 .spot-form{
     max-width: 50%;
   width: 100%;
@@ -19,7 +29,73 @@
   overflow-y: auto;
   box-sizing: border-box;
 }
+.image-section input{
+    width: 100%;
+    margin-top: 2px;
+}
+#title{
+    width: 100%;
+}
+#price{
+    width:97%;
+}
 
 .errors{
     color: red;
+    display: block;
+    font-size: 12px;
+    height: 14px;
+}
+
+.prefill-dummy-data {
+    margin-left: 5px;
+    color: #b5264e;    
+    font-style: italic;
+    font-size: 14px;
+    text-underline-offset: auto;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.city-state{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.spot-form .form-title{
+    font-size: x-large;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.create-city{
+    width: 58%;
+}
+.create-state{
+    width: 38%;
+}
+.form-section{
+    border-bottom: 3px darkgrey solid;
+  padding-bottom: 16px;
+}
+.form-field1{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.create-spot-button{
+    background-color: #b5264e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+  align-self: center;
+  display: block;
+  margin: 20px auto;
+}
+
+.form-section-header{
+    margin-bottom: 10px;
 }

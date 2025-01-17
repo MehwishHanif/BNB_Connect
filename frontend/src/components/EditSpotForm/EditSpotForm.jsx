@@ -21,7 +21,7 @@ function EditSpotForm(){
         dispatch(getSpotDetails(spotId));
     }, [dispatch, spotId]);
 
-    if (!spot) return <>Loading...</>;    
+    if (!spot) return <h3>Loading...</h3>;    
 
     return (
         Object.keys(spot).length > 1 && (

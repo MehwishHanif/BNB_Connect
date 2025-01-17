@@ -150,8 +150,8 @@ function SpotForm( {spot, spotImage,formType}){
           (<h1 className="form-title">Create a New Spot</h1>)
           :(<h1 className="form-title">Update your Spot</h1>)
         }
-        { formType === "Create Spot" && (<a href="#" onClick={prefillDummyData}>
-          * Click here to fill dummy data
+        { formType === "Create Spot" && (<a href="#" className="prefill-dummy-data" onClick={prefillDummyData}>
+           Click here to fill dummy data
         </a> )}
         <div className="form-section">
           <div className="form-section-header">
@@ -161,36 +161,46 @@ function SpotForm( {spot, spotImage,formType}){
               reservation.
             </p>
           </div>
-          <label htmlFor="country">Country</label><span className='errors'>{hasSubmitted && errors.country && `  ${errors.country}`}</span>
-          <input
+          <div className="form-field1">
+            <label htmlFor="country">Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="Country" 
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+            /> 
+          </div>
+          <span className='errors'>{hasSubmitted && errors.country && `  ${errors.country}`}</span>
+          <div className="form-field1">
+            <label htmlFor="address">Street Address</label>
+            <input
             type="text"
-            id="country"
-            name="country"
-            placeholder="Country" 
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-          />
-          <label htmlFor="address">Street Address</label><span className='errors'>{hasSubmitted && errors.address && `  ${errors.address}`}</span>
-          <input
-            type="text"
-            id="address"
             name="address"
             placeholder="Street Address" 
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-          />
-          <div>
-            <label htmlFor="city">City</label><span className='errors'>{hasSubmitted && errors.city && `  ${errors.city}`}</span>
-            <input type="text" id="city" name="city" placeholder="City" 
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-             />
+            />
+          </div>
+          <span className='errors'>{hasSubmitted && errors.address && `  ${errors.address}`}</span>
+          <div className='city-state'>
+            <div className="form-field1 create-city">
+              <label htmlFor="city">City</label>
+              <input type="text" id="city" name="city" placeholder="City" 
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              />
+              <span className='errors'>{hasSubmitted && errors.city && `  ${errors.city}`}</span>
+            </div>
             <span>,</span>
-            <label htmlFor="state">State</label><span className='errors'>{hasSubmitted && errors.state && `  ${errors.state}`}</span>
-            <input type="text" id="state" name="state" placeholder="State" 
-            value={state}
-            onChange={(e) => setState(e.target.value)} 
-          />
+            <div className="form-field1 create-state">
+              <label htmlFor="state">State</label>
+              <input type="text" id="state" name="state" placeholder="State" 
+              value={state}
+              onChange={(e) => setState(e.target.value)} 
+              />
+              <span className='errors'>{hasSubmitted && errors.state && `  ${errors.state}`}</span>
+            </div>
           </div>
         </div>
         <div className="form-section">
@@ -202,7 +212,6 @@ function SpotForm( {spot, spotImage,formType}){
               neighborhood.
             </p>
           </div>
-          <label htmlFor="description">Description</label>
           <input
             type="text"
             id="description"
@@ -222,7 +231,6 @@ function SpotForm( {spot, spotImage,formType}){
               makes your place special.
             </p>
           </div>
-          <label htmlFor="title">Title</label>
           <input
             type="text"
             id="title"
@@ -242,9 +250,10 @@ function SpotForm( {spot, spotImage,formType}){
             </p>
           </div>
           <div className="form-price">
-            <label htmlFor="price">$</label>
+            <label htmlFor="price" id="dollar-sign">$</label>
             <input
               type="number"
+              min="0"
               id="price"
               name="price"
               placeholder="Price per night (USD)" 
@@ -254,7 +263,7 @@ function SpotForm( {spot, spotImage,formType}){
             <div className='errors'>{hasSubmitted && errors.price && `  ${errors.price}`}</div>
           </div>
         </div>
-        {formType === "Create Spot" && (<div className="form-section">
+        {formType === "Create Spot" && (<div className="form-section image-section">
           <div className="form-section-header">
             <h3>Liven up your spot with photos</h3>
             <p>Submit a link to at least one photo to publish your spot.</p>
@@ -286,7 +295,6 @@ function SpotForm( {spot, spotImage,formType}){
         </div>
          )}
         <button type="submit" className="create-spot-button" 
-        //  disabled={Object.values(errors).length}
           >
           {formType === 'Create Spot'? "Create Spot": "Update Spot"}
         </button>

@@ -1,6 +1,13 @@
 .manage-create-spot-button{
-    background-color: rgb(214, 87, 87);
-    color: white;
+    background-color: #b5264e;
+  color: #fff;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px gray;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 12px;
+  margin: 10px;
+  margin-left: 0px;
 }
 
 .user-spots-index {
@@ -18,3 +25,7 @@
     margin-right: 4%;
 }
 
+.manage-spots-header h1{
+    font-size: x-large;
+  font-weight: 600;
+}

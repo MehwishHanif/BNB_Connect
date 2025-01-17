@@ -33,6 +33,9 @@ function SpotShow(){
           <span> {spot?.numReviews > 1 ? `# ${spot?.numReviews} reviews` : `# ${spot?.numReviews} review`}</span>
       </p>
     );
+
+    if (!spot) return <h3>Loading...</h3>;
+    
     return (
       <div className="spot-details">
         <header className="spot-header">

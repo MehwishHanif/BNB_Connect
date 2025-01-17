@@ -37,12 +37,12 @@ function SpotIndexItem({ spot , actionType}){
               <div>
                 {spot?.city}, {spot?.state}
               </div>
-              <div>
+              <div className='rating-star-input'>
                 {ratingContent}
               </div>
             </div>
             <div className="spot-tile-desc-second">
-              <div>$ {spot?.price} night</div>
+              <div>{actionType === "Get User Spots" ? (<span>$ {spot?.price}</span>):(<span>$ {spot?.price?.split(".")[0]}</span>)} night</div>
             </div>
           </div>
           {actionType === "Get User Spots" && (

@@ -16,7 +16,7 @@ function ManageSpot(){
     return (
         <div className="manage-spots">
             <div className="manage-spots-header">
-                <h1>Manage Spots</h1>
+                <h1>Manage Your Spots</h1>
                 { spots?.length < 1 ? (<button className="manage-create-spot-button">
                     <NavLink to="/spots/new">Create a New Spot</NavLink>
                 </button>) : (null)}
