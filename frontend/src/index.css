@@ -3,10 +3,20 @@
 
 #root{
     padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 body{
     background-color: lightgray;
     font-family: Geneva, Tahoma, sans-serif;
     color: #222020;
     padding: 0px 3%;
+}
+html, body, #root{
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    flex-grow: 1;
 }
