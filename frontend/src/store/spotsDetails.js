@@ -44,7 +44,7 @@ const spotsDetailsReducer = (state = {}, action) => {
           Owner: { ...spot.Owner },
           avgStarRating:typeof spot.avgStarRating === "number" 
           ? spot.avgStarRating.toFixed(1) 
-          : (spot.avgStarRating === null ? 0.0 : Number(spot.avgStarRating || 0).toFixed(1)),// Convert to string with 1 decimal place
+          : (spot.avgStarRating === null ? 0.0 : Number(spot.avgStarRating || 0).toFixed(1)),
           price: spot.price.toFixed(2),
         },
       };
