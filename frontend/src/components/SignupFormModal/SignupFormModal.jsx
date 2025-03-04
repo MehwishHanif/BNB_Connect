@@ -15,14 +15,24 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
    useEffect(() => {
+      const formErrors = {};
       if (!confirmPassword.length || !email.length || firstName.length < 2 || lastName.length < 2 || username.trim().length < 4 ||   password.trim().length < 6 ) {
         setIsButtonDisabled(true);
       } else {
         setIsButtonDisabled(false);
       }
-    }, [username, password, email, confirmPassword, firstName, lastName ]);
+      if(!isValidEmail(email)){
+        formErrors.email ="Please provide a valid email.";
+      }
+      if (confirmPassword.length && password !== confirmPassword){
+        formErrors.confirmPassword="Confirm Password must be the same as the Password";
+     
+      }
+      setErrors( formErrors);
+    }, [errors,username, password, email, confirmPassword, firstName, lastName ]);
 
   function isValidEmail(email) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,20 +41,16 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
+    const formErrors= {};
     if (password !== confirmPassword){
-      setErrors({
-        ...errors,
-        confirmPassword: "Confirm Password must be the same as the Password"
-      });
+      formErrors.confirmPassword="Confirm Password must be the same as the Password";
     } 
     if(!isValidEmail(email)){
-      setErrors({
-        ...errors,
-        email: "Please provide a valid email."
-      });
+      formErrors.email ="Please provide a valid email.";
     }   
-
-    if (password === confirmPassword && isValidEmail(email)) {
+    setErrors(formErrors);
+    if (!Object.values(errors).length){ 
       setErrors({});
       return dispatch(
         sessionActions.signup({
@@ -60,6 +66,7 @@ function SignupFormModal() {
           const data = await res.json();
           if (data?.errors) {
             setErrors(data.errors);
+            setHasSubmitted(true);
           }
         });
     }
@@ -78,7 +85,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        <div className="errors">{errors.email && <p>{errors.email}</p>}</div>
+        <div className="errors">{hasSubmitted && errors.email && <p>{errors.email}</p>}</div>
         <label>
           Username
           <input
@@ -137,7 +144,7 @@ function SignupFormModal() {
           />
         </label>
         <div className="errors">
-          {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+          {hasSubmitted && errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         </div>
         <button type="submit" 
           disabled={isButtonDisabled}

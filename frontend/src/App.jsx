@@ -8,6 +8,7 @@ import SpotShow from './components/SpotShow';
 import CreateSpotForm from './components/CreateSpotForm';
 import ManageSpot from './components/ManageSpot';
 import EditSpotForm from './components/EditSpotForm';
+import Footer from './components/Footer';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function Layout() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && <Outlet />}
+      <Footer />
     </>
   );
 }
