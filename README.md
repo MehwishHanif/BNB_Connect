@@ -71,7 +71,7 @@ To set up BNB Connect for local development, follow these steps:
 1.  **Clone the repository:**
 
     ```bash
-    gh clone fayfan/RyoKanvas
+    gh clone MehwishHanif/BNB_Connect
     ```
 
 2.  **Configure the backend environment:**
