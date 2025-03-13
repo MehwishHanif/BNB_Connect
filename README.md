@@ -31,7 +31,7 @@ For more details on the architecture of BNB Connect, visit the project's wiki pa
 * **Property Cards:** Each property is shown in a card with images, title, price, and rating.
 * **Navigation:** Users can click on a property card to view detailed information.
 
-![Landing Page](https://github.com/user-attachments/assets/51a5e5f9-d0d3-421b-a5ed-41f7e61581ac)
+![Landing Page](https://github.com/user-attachments/assets/63bdc96a-ebb3-4f29-a714-602477f630d7)
 <br>
 ### Spot Details
 
